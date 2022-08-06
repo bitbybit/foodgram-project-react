@@ -27,6 +27,7 @@ class User(AbstractUser):
         verbose_name="Фамилия",
     )
     email = models.EmailField(
+        db_index=True,
         verbose_name="Email",
     )
     follower = models.ManyToManyField(

@@ -66,6 +66,7 @@ class Recipe(models.Model):
         verbose_name="Ингредиент",
     )
     name = models.CharField(
+        db_index=True,
         max_length=200,
         verbose_name="Название",
     )
