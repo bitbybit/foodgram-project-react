@@ -9,23 +9,42 @@ class User(AbstractUser):
     )
 
     role = models.CharField(
-        max_length=25,
-        verbose_name="Роль пользователя",
         choices=ROLE_CHOICES,
         default="user",
+        max_length=25,
+        verbose_name="Роль пользователя",
     )
     password = models.CharField(
-        verbose_name="Пароль",
         max_length=150,
+        verbose_name="Пароль",
     )
     first_name = models.CharField(
-        verbose_name="Имя",
         max_length=150,
+        verbose_name="Имя",
     )
     last_name = models.CharField(
-        verbose_name="Фамилия",
         max_length=150,
+        verbose_name="Фамилия",
     )
     email = models.EmailField(
         verbose_name="Email",
     )
+    follower = models.ManyToManyField(
+        "self",
+        related_name="following",
+        symmetrical=False,
+        verbose_name="Подписчик",
+    )
+    favorite = models.ManyToManyField(
+        "food.Recipe",
+        related_name="users_favorited",
+        verbose_name="Находится ли в избранном",
+    )
+    cart = models.ManyToManyField(
+        "food.Recipe",
+        related_name="users_added_to_cart",
+        verbose_name="Находится ли в корзине",
+    )
+
+    class Meta:
+        verbose_name = "Пользователь"
