@@ -49,6 +49,7 @@ class Tag(models.Model):
 class Recipe(models.Model):
     tag = models.ManyToManyField(
         Tag,
+        blank=True,
         related_name="recipes",
         verbose_name="Тег",
     )
@@ -93,11 +94,19 @@ class Recipe(models.Model):
 
 
 class IngredientInRecipe(models.Model):
-    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
-    ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
+    recipe: Recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
+    ingredient: Ingredient = models.ForeignKey(
+        Ingredient, on_delete=models.CASCADE
+    )
     amount = models.PositiveSmallIntegerField(
         validators=[
             MinValueValidator(1, message="Количество не может быть меньше 1"),
         ],
         verbose_name="Количество",
     )
+
+    def __str__(self):
+        return (
+            f"{self.recipe.name} - {self.ingredient.name} "
+            f"({self.amount} {self.ingredient.measurement_unit}) "
+        )

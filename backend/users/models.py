@@ -31,17 +31,20 @@ class User(AbstractUser):
     )
     follower = models.ManyToManyField(
         "self",
+        blank=True,
         related_name="following",
         symmetrical=False,
         verbose_name="Подписчик",
     )
     favorite = models.ManyToManyField(
         "food.Recipe",
+        blank=True,
         related_name="users_favorited",
         verbose_name="Находится ли в избранном",
     )
     cart = models.ManyToManyField(
         "food.Recipe",
+        blank=True,
         related_name="users_added_to_cart",
         verbose_name="Находится ли в корзине",
     )
