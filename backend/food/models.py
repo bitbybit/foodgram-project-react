@@ -15,6 +15,10 @@ class Ingredient(models.Model):
 
     class Meta:
         verbose_name = "Ингредиент"
+        verbose_name_plural = "Ингредиенты"
+
+    def __str__(self):
+        return self.name
 
 
 class Tag(models.Model):
@@ -36,6 +40,10 @@ class Tag(models.Model):
 
     class Meta:
         verbose_name = "Тег"
+        verbose_name_plural = "Теги"
+
+    def __str__(self):
+        return self.name
 
 
 class Recipe(models.Model):
@@ -78,6 +86,10 @@ class Recipe(models.Model):
 
     class Meta:
         verbose_name = "Рецепт"
+        verbose_name_plural = "Рецепты"
+
+    def __str__(self):
+        return self.name
 
 
 class IngredientInRecipe(models.Model):
