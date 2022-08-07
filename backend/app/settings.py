@@ -1,5 +1,5 @@
 import os
-from datetime import timedelta
+from typing import List
 
 from dotenv import load_dotenv
 
@@ -24,6 +24,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
+    "rest_framework.authtoken",
+    "djoser",
     "django_filters",
 ]
 
@@ -72,24 +74,7 @@ DATABASES = {
     },
 }
 
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        "NAME": "django.contrib.auth.password_validation"
-        ".UserAttributeSimilarityValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation"
-        ".MinimumLengthValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation"
-        ".CommonPasswordValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation"
-        ".NumericPasswordValidator",
-    },
-]
+AUTH_PASSWORD_VALIDATORS: List = []
 
 LANGUAGE_CODE = "en-us"
 
@@ -114,14 +99,18 @@ REST_FRAMEWORK = {
         "rest_framework.permissions.IsAuthenticated",
     ],
     "DEFAULT_AUTHENTICATION_CLASSES": (
-        "rest_framework_simplejwt.authentication.JWTAuthentication",
+        "rest_framework.authentication.TokenAuthentication",
     ),
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination"
     ".PageNumberPagination",
     "PAGE_SIZE": 10,
 }
 
-SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
-    "AUTH_HEADER_TYPES": ("Bearer",),
+DJOSER = {
+    "LOGIN_FIELD": "email",
+    "SERIALIZERS": {
+        "user": "users.serializers.UserSerializer",
+        "current_user": "users.serializers.UserSerializer",
+        "user_create": "users.serializers.AuthUserTokenSerializer",
+    },
 }
