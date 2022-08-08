@@ -7,9 +7,12 @@ class UserSerializer(serializers.ModelSerializer):
     is_subscribed = serializers.SerializerMethodField()
 
     def get_is_subscribed(self, obj: User) -> bool:
-        return obj.following.filter(
-            id=self.context.get("request").user.id
-        ).exists()
+        user = self.context.get("request").user
+
+        if not user.is_authenticated:
+            return False
+
+        return obj.following.filter(id=user.id).exists()
 
     class Meta:
         fields = (
