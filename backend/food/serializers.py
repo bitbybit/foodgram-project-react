@@ -184,3 +184,15 @@ class RecipeSerializerWrite(RecipeSerializer):
         )
 
         model = Recipe
+
+
+class RecipeFavoriteSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = (
+            "cooking_time",
+            "id",
+            "image",
+            "name",
+        )
+
+        model = Recipe
