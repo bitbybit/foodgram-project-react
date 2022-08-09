@@ -1,11 +1,8 @@
 from django.db.models import IntegerField, Value
-from django_filters import BaseInFilter, CharFilter, FilterSet, NumberFilter
+from django_filters import CharFilter, FilterSet, NumberFilter
 
+from .filters import CharInFilter
 from .models import Ingredient, Recipe
-
-
-class CharInFilter(BaseInFilter, CharFilter):
-    pass
 
 
 class IngredientFilter(FilterSet):
