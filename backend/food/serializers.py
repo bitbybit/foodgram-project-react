@@ -126,8 +126,15 @@ class RecipeSerializerWrite(RecipeSerializer):
     def process_data(self, validated_data, instance=None):
         validated_data["author"] = self.context.get("request").user
 
-        tags = validated_data.pop("tags")
-        ingredients = validated_data.pop("ingredients")
+        try:
+            tags = validated_data.pop("tags")
+        except KeyError:
+            tags = []
+
+        try:
+            ingredients = validated_data.pop("ingredients")
+        except KeyError:
+            ingredients = []
 
         if instance is None:
             recipe = Recipe.objects.create(**validated_data)
@@ -137,18 +144,20 @@ class RecipeSerializerWrite(RecipeSerializer):
             for attr, value in validated_data.items():
                 setattr(recipe, attr, value)
 
-        recipe.tag.clear()
+        if tags:
+            recipe.tag.clear()
 
-        for tag_item in tags:
-            recipe.tag.add(tag_item)
+            for tag_item in tags:
+                recipe.tag.add(tag_item)
 
-        recipe.ingredient.clear()
+        if ingredients:
+            recipe.ingredient.clear()
 
-        for ingredient_item in ingredients:
-            recipe.ingredient.add(
-                ingredient_item["id"],
-                through_defaults={"amount": ingredient_item["amount"]},
-            )
+            for ingredient_item in ingredients:
+                recipe.ingredient.add(
+                    ingredient_item["id"],
+                    through_defaults={"amount": ingredient_item["amount"]},
+                )
 
         recipe.save()
 
