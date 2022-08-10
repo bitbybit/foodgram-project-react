@@ -25,7 +25,7 @@ class SubscribeViewSet(SwitchOnOffViewSet):
     def is_on(self) -> bool:
         user = self.get_object()
 
-        return self.request.user.following.filter(id=user.id).exists()
+        return self.request.user.follower.filter(id=user.id).exists()
 
     def create(self, request, *args, **kwargs):
         user = self.get_object()
@@ -38,9 +38,9 @@ class SubscribeViewSet(SwitchOnOffViewSet):
     def perform_create(self, serializer: SubscribedUserSerializer):
         user = self.get_object()
 
-        self.request.user.following.add(user)
+        self.request.user.follower.add(user)
         self.request.user.save()
 
     def perform_destroy(self, instance: User):
-        self.request.user.following.remove(instance)
+        self.request.user.follower.remove(instance)
         self.request.user.save()
