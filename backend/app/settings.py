@@ -113,4 +113,9 @@ DJOSER = {
         "current_user": "users.serializers.UserSerializer",
         "user_create": "users.serializers.AuthUserTokenSerializer",
     },
+    "PERMISSIONS": {
+        "user": ["rest_framework.permissions.IsAuthenticated"],
+        "user_list": ["rest_framework.permissions.IsAuthenticated"],
+    },
+    "HIDE_USERS": False,
 }
