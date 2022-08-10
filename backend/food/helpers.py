@@ -6,12 +6,12 @@ from .models import Recipe
 def get_unique_recipe_ingredients(
     recipes: List[Recipe],
 ) -> Dict[str, Dict[str, Union[int, str]]]:
-    result: Dict = {}
     """
     Ингредиенты в результирующем списке не должны дублироваться;
     если в двух рецептах есть сахар (в одном рецепте 5 г, в другом — 10 г),
     то в списке должен быть один пункт: Сахар — 15 г.
     """
+    result: Dict = {}
 
     for recipe in recipes:
         for ingredient_in_recipe in recipe.ingredient_in_recipe.all():
