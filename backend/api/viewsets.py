@@ -1,6 +1,14 @@
+import io
+from typing import List
+
 from django.db import models
+from django.http import FileResponse
 from django.shortcuts import get_object_or_404
-from rest_framework import mixins, permissions, status, viewsets
+from reportlab.lib.pagesizes import A4
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont
+from reportlab.pdfgen import canvas
+from rest_framework import mixins, permissions, status, views, viewsets
 from rest_framework.response import Response
 
 
@@ -74,3 +82,38 @@ class SwitchOnOffViewSet(CreateDestroyModelViewSet):
             return self.error(self.error_text_destroy)
 
         return super().destroy(request, *args, **kwargs)
+
+
+class PdfView(views.APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    font_path = "./assets/OpenSans.ttf"
+    filename = "file.pdf"
+
+    def get_text_lines(self) -> List[str]:
+        pass
+
+    def get(self, request) -> FileResponse:
+        buffer = io.BytesIO()
+
+        pdfmetrics.registerFont(TTFont("Font", self.font_path))
+
+        page = canvas.Canvas(buffer, pagesize=A4)
+        page.setFont("Font", 14)
+
+        text = page.beginText()
+        text.setTextOrigin(80, 750)
+
+        for text_line in self.get_text_lines():
+            text.textLine(text=text_line)
+
+        page.drawText(text)
+        page.showPage()
+        page.save()
+
+        buffer.seek(0)
+
+        return FileResponse(
+            buffer,
+            as_attachment=True,
+            filename=self.filename,
+        )
