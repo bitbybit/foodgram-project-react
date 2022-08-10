@@ -95,9 +95,15 @@ class Recipe(models.Model):
 
 
 class IngredientInRecipe(models.Model):
-    recipe: Recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
+    recipe: Recipe = models.ForeignKey(
+        Recipe,
+        on_delete=models.CASCADE,
+        related_name="ingredient_in_recipe",
+    )
     ingredient: Ingredient = models.ForeignKey(
-        Ingredient, on_delete=models.CASCADE
+        Ingredient,
+        on_delete=models.CASCADE,
+        related_name="ingredient_in_recipe",
     )
     amount = models.PositiveSmallIntegerField(
         validators=[
