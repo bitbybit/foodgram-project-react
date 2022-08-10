@@ -1,7 +1,7 @@
+from app.filters import CharInFilter
 from django.db.models import IntegerField, Value
 from django_filters import CharFilter, FilterSet, NumberFilter
 
-from .filters import CharInFilter
 from .models import Ingredient, Recipe
 
 

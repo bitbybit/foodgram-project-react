@@ -1,7 +1,7 @@
+from api.fields import ImageBase64Field
 from rest_framework import serializers
 from users.serializers import UserSerializer
 
-from .fields import ImageBase64Field
 from .models import Ingredient, IngredientInRecipe, Recipe, Tag
 
 
@@ -186,7 +186,7 @@ class RecipeSerializerWrite(RecipeSerializer):
         model = Recipe
 
 
-class RecipeFavoriteSerializer(serializers.ModelSerializer):
+class RecipeCompactSerializer(serializers.ModelSerializer):
     class Meta:
         fields = (
             "cooking_time",
