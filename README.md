@@ -61,7 +61,7 @@ docker-compose -f ./infra/docker-compose.yml exec web python manage.py createsup
 # docker-compose -f ./infra/docker-compose.yml exec web python manage.py loaddata /app/data/fixtures.json
 ```
 
-[Docker Hub](https://hub.docker.com/repository/docker/hubhubhubhub/yamdb_final)
+[Docker Hub](https://hub.docker.com/repository/docker/hubhubhubhub/foodgram)
 
 ## ТЗ
 
