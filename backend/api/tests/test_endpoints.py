@@ -1,9 +1,9 @@
 from http import HTTPStatus
 
 from django.test import TestCase
+from food.models import Ingredient, Recipe, Tag
 from rest_framework.test import APIClient
 from users.models import User
-from food.models import Tag, Recipe, Ingredient, IngredientInRecipe
 
 IMAGE_BASE64 = (
     "data:image/png;base64,"
