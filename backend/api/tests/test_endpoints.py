@@ -9,7 +9,7 @@ IMAGE_BASE64 = (
     "data:image/png;base64,"
     "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAgMAAABieywaAAAACVBMVEUAAAD"
     "///9fX1/S0ecCAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNoAA"
-    "AAggCByxOyYQAAAABJRU5ErkJggg== "
+    "AAggCByxOyYQAAAABJRU5ErkJggg=="
 )
 
 USER = (
@@ -257,7 +257,6 @@ class URLTests(TestCase):
         recipe = Recipe.objects.create(
             author=author,
             name="Название",
-            image=IMAGE_BASE64,
             text="Описание",
             cooking_time=60,
         )
