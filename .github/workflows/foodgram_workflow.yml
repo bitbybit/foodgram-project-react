@@ -6,6 +6,16 @@ jobs:
   tests:
     runs-on: ubuntu-latest
 
+    services:
+      postgres:
+        image: postgres:13
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: postgres
+        ports: [ '5432:5432' ]
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
     steps:
       - uses: actions/checkout@v2
 
@@ -22,8 +32,14 @@ jobs:
       - name: Run tests
         env:
           SECRET_KEY: secret
+          DB_NAME: postgres
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          DB_HOST: localhost
+          DB_PORT: ${{ job.services.postgres.ports[5432] }}
         run: |
           cd backend
+          python manage.py migrate --noinput
           python manage.py test
 
 
