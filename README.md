@@ -1,5 +1,21 @@
 ![foodgram_workflow](https://github.com/bitbybit/foodgram-project-react/actions/workflows/foodgram_workflow.yml/badge.svg)
 
+## Пример
+
+* [http://foodgram.duckdns.org/](http://foodgram.duckdns.org/)
+
+  Логин: lena@lena.com
+
+  Пароль: lena
+
+* [http://foodgram.duckdns.org/admin/](http://foodgram.duckdns.org/admin/)
+
+  Логин: admin
+
+  Пароль: admin
+
+* [http://foodgram.duckdns.org/api/docs/](http://foodgram.duckdns.org/api/docs/)
+
 ## Установка
 
 1. `git clone git@github.com:bitbybit/foodgram-project-react.git`
