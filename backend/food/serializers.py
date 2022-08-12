@@ -29,12 +29,6 @@ class IngredientSerializer(serializers.ModelSerializer):
 
 
 class IngredientInRecipeSerializer(serializers.ModelSerializer):
-    id = serializers.ReadOnlyField(source="ingredient.id")
-    measurement_unit = serializers.ReadOnlyField(
-        source="ingredient.measurement_unit"
-    )
-    name = serializers.ReadOnlyField(source="ingredient.name")
-
     class Meta:
         fields = (
             "amount",
@@ -45,13 +39,14 @@ class IngredientInRecipeSerializer(serializers.ModelSerializer):
 
         model = IngredientInRecipe
 
+    id = serializers.ReadOnlyField(source="ingredient.id")
+    measurement_unit = serializers.ReadOnlyField(
+        source="ingredient.measurement_unit"
+    )
+    name = serializers.ReadOnlyField(source="ingredient.name")
+
 
 class IngredientInRecipeSerializerWrite(IngredientInRecipeSerializer):
-    id = serializers.PrimaryKeyRelatedField(
-        queryset=Ingredient.objects.all(),
-        required=True,
-    )
-
     class Meta:
         fields = (
             "amount",
@@ -60,8 +55,29 @@ class IngredientInRecipeSerializerWrite(IngredientInRecipeSerializer):
 
         model = IngredientInRecipe
 
+    id = serializers.PrimaryKeyRelatedField(
+        queryset=Ingredient.objects.all(),
+        required=True,
+    )
+
 
 class RecipeSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = (
+            "author",
+            "cooking_time",
+            "id",
+            "image",
+            "ingredients",
+            "is_favorited",
+            "is_in_shopping_cart",
+            "name",
+            "tags",
+            "text",
+        )
+
+        model = Recipe
+
     tags = TagSerializer(
         many=True,
         required=True,
@@ -94,15 +110,13 @@ class RecipeSerializer(serializers.ModelSerializer):
 
         return user.cart.filter(id=obj.id).exists()
 
+
+class RecipeSerializerWrite(RecipeSerializer):
     class Meta:
         fields = (
-            "author",
             "cooking_time",
-            "id",
             "image",
             "ingredients",
-            "is_favorited",
-            "is_in_shopping_cart",
             "name",
             "tags",
             "text",
@@ -110,8 +124,6 @@ class RecipeSerializer(serializers.ModelSerializer):
 
         model = Recipe
 
-
-class RecipeSerializerWrite(RecipeSerializer):
     tags = serializers.PrimaryKeyRelatedField(
         queryset=Tag.objects.all(),
         many=True,
@@ -172,18 +184,6 @@ class RecipeSerializerWrite(RecipeSerializer):
     def to_representation(self, obj: Recipe):
         serializer = RecipeSerializer(instance=obj, context=self.context)
         return serializer.data
-
-    class Meta:
-        fields = (
-            "cooking_time",
-            "image",
-            "ingredients",
-            "name",
-            "tags",
-            "text",
-        )
-
-        model = Recipe
 
 
 class RecipeCompactSerializer(serializers.ModelSerializer):

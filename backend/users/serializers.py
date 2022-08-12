@@ -8,16 +8,6 @@ from .models import User
 
 
 class UserSerializer(serializers.ModelSerializer):
-    is_subscribed = serializers.SerializerMethodField()
-
-    def get_is_subscribed(self, obj: User) -> bool:
-        user = self.context.get("request").user
-
-        if not user.is_authenticated:
-            return False
-
-        return obj.following.filter(id=user.id).exists()
-
     class Meta:
         fields = (
             "email",
@@ -30,8 +20,32 @@ class UserSerializer(serializers.ModelSerializer):
 
         model = User
 
+    is_subscribed = serializers.SerializerMethodField()
+
+    def get_is_subscribed(self, obj: User) -> bool:
+        user = self.context.get("request").user
+
+        if not user.is_authenticated:
+            return False
+
+        return obj.following.filter(id=user.id).exists()
+
 
 class SubscribedUserSerializer(UserSerializer):
+    class Meta:
+        fields = (
+            "email",
+            "first_name",
+            "id",
+            "is_subscribed",
+            "last_name",
+            "recipes",
+            "recipes_count",
+            "username",
+        )
+
+        model = User
+
     recipes = serializers.SerializerMethodField()
     recipes_count = serializers.SerializerMethodField()
 
@@ -60,22 +74,20 @@ class SubscribedUserSerializer(UserSerializer):
     def get_recipes_count(obj: User) -> int:
         return obj.recipes.aggregate(Count("id"))["id__count"]
 
+
+class AuthUserTokenSerializer(serializers.ModelSerializer):
     class Meta:
         fields = (
             "email",
             "first_name",
             "id",
-            "is_subscribed",
             "last_name",
-            "recipes",
-            "recipes_count",
+            "password",
             "username",
         )
 
         model = User
 
-
-class AuthUserTokenSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         password = validated_data.pop("password")
 
@@ -89,15 +101,3 @@ class AuthUserTokenSerializer(serializers.ModelSerializer):
         self.fields.pop("password")
 
         return super().to_representation(obj)
-
-    class Meta:
-        fields = (
-            "email",
-            "first_name",
-            "id",
-            "last_name",
-            "password",
-            "username",
-        )
-
-        model = User

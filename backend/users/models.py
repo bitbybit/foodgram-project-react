@@ -3,6 +3,10 @@ from django.db import models
 
 
 class User(AbstractUser):
+    class Meta:
+        verbose_name = "Пользователь"
+        verbose_name_plural = "Пользователи"
+
     ROLE_CHOICES = (
         ("user", "пользователь"),
         ("admin", "администратор"),
@@ -49,7 +53,3 @@ class User(AbstractUser):
         related_name="users_added_to_cart",
         verbose_name="Находится ли в корзине",
     )
-
-    class Meta:
-        verbose_name = "Пользователь"
-        verbose_name_plural = "Пользователи"

@@ -1,5 +1,6 @@
+from api.mixins import ListModelViewSet
 from api.pagination import PageNumberLimitPagination
-from api.viewsets import ListModelViewSet, SwitchOnOffViewSet
+from api.viewsets import SwitchOnOffViewSet
 from rest_framework import permissions
 
 from .models import User

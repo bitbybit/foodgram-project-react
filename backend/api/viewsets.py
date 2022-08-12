@@ -8,23 +8,10 @@ from reportlab.lib.pagesizes import A4
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfgen import canvas
-from rest_framework import mixins, permissions, status, views, viewsets
+from rest_framework import permissions, status, views
 from rest_framework.response import Response
 
-
-class ListModelViewSet(
-    mixins.ListModelMixin,
-    viewsets.GenericViewSet,
-):
-    pass
-
-
-class CreateDestroyModelViewSet(
-    mixins.CreateModelMixin,
-    mixins.DestroyModelMixin,
-    viewsets.GenericViewSet,
-):
-    pass
+from .mixins import CreateDestroyModelViewSet
 
 
 class SwitchOnOffViewSet(CreateDestroyModelViewSet):

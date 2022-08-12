@@ -3,6 +3,10 @@ from django.db import models
 
 
 class Ingredient(models.Model):
+    class Meta:
+        verbose_name = "Ингредиент"
+        verbose_name_plural = "Ингредиенты"
+
     name = models.CharField(
         db_index=True,
         max_length=200,
@@ -13,15 +17,15 @@ class Ingredient(models.Model):
         verbose_name="Единицы измерения",
     )
 
-    class Meta:
-        verbose_name = "Ингредиент"
-        verbose_name_plural = "Ингредиенты"
-
     def __str__(self):
         return self.name
 
 
 class Tag(models.Model):
+    class Meta:
+        verbose_name = "Тег"
+        verbose_name_plural = "Теги"
+
     name = models.CharField(
         max_length=200,
         unique=True,
@@ -38,15 +42,16 @@ class Tag(models.Model):
         verbose_name="URL",
     )
 
-    class Meta:
-        verbose_name = "Тег"
-        verbose_name_plural = "Теги"
-
     def __str__(self):
         return self.name
 
 
 class Recipe(models.Model):
+    class Meta:
+        ordering = ("-id",)
+        verbose_name = "Рецепт"
+        verbose_name_plural = "Рецепты"
+
     tag = models.ManyToManyField(
         Tag,
         related_name="recipes",
@@ -84,11 +89,6 @@ class Recipe(models.Model):
         ],
         verbose_name="Время приготовления (в минутах)",
     )
-
-    class Meta:
-        ordering = ["-id"]
-        verbose_name = "Рецепт"
-        verbose_name_plural = "Рецепты"
 
     def __str__(self):
         return self.name

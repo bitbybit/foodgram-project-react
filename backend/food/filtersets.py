@@ -6,6 +6,10 @@ from .models import Ingredient, Recipe
 
 
 class IngredientFilter(FilterSet):
+    class Meta:
+        model = Ingredient
+        fields = ("name",)
+
     @staticmethod
     def filter_name(queryset, name, value):
         startswith = queryset.filter(
@@ -22,12 +26,17 @@ class IngredientFilter(FilterSet):
 
     name = CharFilter(field_name="name", method="filter_name")
 
-    class Meta:
-        model = Ingredient
-        fields = ("name",)
-
 
 class RecipeFilter(FilterSet):
+    class Meta:
+        model = Recipe
+        fields = (
+            "author",
+            "is_favorited",
+            "is_in_shopping_cart",
+            "tags",
+        )
+
     def filter_is_user_in_list(self, queryset, name, value):
         user = self.request.user
 
@@ -62,12 +71,3 @@ class RecipeFilter(FilterSet):
         field_name="tag__slug",
         method="filter_tags",
     )
-
-    class Meta:
-        model = Recipe
-        fields = (
-            "author",
-            "is_favorited",
-            "is_in_shopping_cart",
-            "tags",
-        )

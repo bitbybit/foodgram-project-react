@@ -4,6 +4,7 @@ from django.db.models import Count
 from .models import Ingredient, IngredientInRecipe, Recipe, Tag
 
 
+@admin.register(Ingredient)
 class IngredientAdmin(admin.ModelAdmin):
     list_display = (
         "name",
@@ -12,6 +13,7 @@ class IngredientAdmin(admin.ModelAdmin):
     list_filter = ("name",)
 
 
+@admin.register(Recipe)
 class RecipeAdmin(admin.ModelAdmin):
     list_display = (
         "name",
@@ -31,7 +33,5 @@ class RecipeAdmin(admin.ModelAdmin):
     favorited.short_description = "Общее число добавлений рецепта в избранное"
 
 
-admin.site.register(Ingredient, IngredientAdmin)
 admin.site.register(Tag)
-admin.site.register(Recipe, RecipeAdmin)
 admin.site.register(IngredientInRecipe)
