@@ -1,0 +1,188 @@
+{
+  "USER": [
+    {
+      "method": "get",
+      "url": "/api/users/"
+    },
+    {
+      "method": "get",
+      "url": "/api/users/1/"
+    },
+    {
+      "method": "get",
+      "url": "/api/users/999/",
+      "status": 404
+    },
+    {
+      "method": "get",
+      "url": "/api/users/me/"
+    },
+    {
+      "method": "post",
+      "url": "/api/users/set_password/",
+      "payload": {
+        "new_password": "new_password",
+        "current_password": "current_password"
+      },
+      "status": 204
+    },
+    {
+      "method": "post",
+      "url": "/api/auth/token/logout/",
+      "status": 204
+    },
+    {
+      "method": "post",
+      "url": "/api/recipes/",
+      "payload": {
+        "ingredients": [
+          {
+            "id": 1,
+            "amount": 2
+          }
+        ],
+        "tags": [
+          1
+        ],
+        "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAIAQMAAAD+wSzIAAAABlBMVEX///+/v7+jQ3Y5AAAADklEQVQI12P4AIX8EAgALgAD/aNpbtEAAAAASUVORK5CYII=",
+        "name": "Название",
+        "text": "Описание",
+        "cooking_time": 1
+      },
+      "status": 201
+    },
+    {
+      "method": "patch",
+      "url": "/api/recipes/1/",
+      "payload": {
+        "ingredients": [
+          {
+            "id": 1,
+            "amount": 2
+          }
+        ],
+        "tags": [
+          1
+        ],
+        "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAIAQMAAAD+wSzIAAAABlBMVEX///+/v7+jQ3Y5AAAADklEQVQI12P4AIX8EAgALgAD/aNpbtEAAAAASUVORK5CYII=",
+        "name": "Название",
+        "text": "Описание",
+        "cooking_time": 1
+      },
+      "status": 403
+    },
+    {
+      "method": "delete",
+      "url": "/api/recipes/1/",
+      "status": 403
+    },
+    {
+      "method": "get",
+      "url": "/api/recipes/download_shopping_cart/"
+    },
+    {
+      "method": "post",
+      "url": "/api/recipes/1/shopping_cart/",
+      "status": 201
+    },
+    {
+      "method": "delete",
+      "url": "/api/recipes/1/shopping_cart/",
+      "status": 204
+    },
+    {
+      "method": "post",
+      "url": "/api/recipes/1/favorite/",
+      "status": 201
+    },
+    {
+      "method": "delete",
+      "url": "/api/recipes/1/favorite/",
+      "status": 204
+    },
+    {
+      "method": "get",
+      "url": "/api/users/subscriptions/",
+      "status": 200
+    },
+    {
+      "method": "post",
+      "url": "/api/users/2/subscribe/",
+      "status": 201
+    },
+    {
+      "method": "delete",
+      "url": "/api/users/2/subscribe/",
+      "status": 204
+    }
+  ],
+  "GUEST": [
+    {
+      "method": "get",
+      "url": "/api/users/999/",
+      "status": 401
+    },
+    {
+      "method": "post",
+      "url": "/api/users/",
+      "payload": {
+        "email": "vpupkin@yandex.ru",
+        "username": "vasya.pupkin",
+        "first_name": "Вася",
+        "last_name": "Пупкин",
+        "password": "Qwerty123"
+      },
+      "status": 201
+    },
+    {
+      "method": "post",
+      "url": "/api/auth/token/login/",
+      "payload": {
+        "password": "current_password",
+        "email": "test@test.com"
+      }
+    },
+    {
+      "method": "get",
+      "url": "/api/tags/"
+    },
+    {
+      "method": "get",
+      "url": "/api/tags/1/"
+    },
+    {
+      "method": "get",
+      "url": "/api/recipes/"
+    },
+    {
+      "method": "get",
+      "url": "/api/recipes/1/"
+    },
+    {
+      "method": "get",
+      "url": "/api/ingredients/"
+    },
+    {
+      "method": "get",
+      "url": "/api/ingredients/1/"
+    }
+  ],
+  "NON_EXISTING": [
+    {
+      "method": "get",
+      "url": "/unexisting_endpoint/"
+    },
+    {
+      "method": "get",
+      "url": "/api/tags/999/"
+    },
+    {
+      "method": "get",
+      "url": "/api/recipes/999/"
+    },
+    {
+      "method": "get",
+      "url": "/api/ingredients/999/"
+    }
+  ]
+}
